@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* می‌تونی استایل‌های عمومی رو اینجا اضافه کنی */
+body {
+  @apply min-h-screen bg-zinc-950 text-zinc-100;
+}
