@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { registerRequest } from "@/lib/auth.api"; // استفاده از تابع registerRequest
 import { useRouter } from "next/navigation";
