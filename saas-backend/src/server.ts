@@ -15,7 +15,8 @@ const app = express();
 /* -------------------- CORS -------------------- */
 app.use(
   cors({
-    origin: "http://localhost:3000", // Next.js
+    origin:["http://localhost:3000",
+    "https://mini-saas-aqfn.onrender.com"], // Next.js
     credentials: true,
   })
 );
