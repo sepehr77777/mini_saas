@@ -1,19 +1,32 @@
-import { pool } from "./db";
+import { Pool } from "pg";
 import bcrypt from "bcrypt";
+
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+});
 
 // پیدا کردن یوزر بر اساس ایمیل
 export const findUserByEmail = async (email: string) => {
-  const res = await pool.query("SELECT * FROM users WHERE email=$1", [email]);
+  const res = await pool.query(
+    "SELECT * FROM users WHERE email = $1",
+    [email]
+  );
   return res.rows[0];
 };
 
 // ایجاد یوزر جدید
-export const createUser = async (email: string, password: string, name?: string) => {
+export const createUser = async (
+  email: string,
+  password: string,
+  name?: string
+) => {
   const hashed = await bcrypt.hash(password, 10);
+
   const res = await pool.query(
     "INSERT INTO users (email, password, name) VALUES ($1, $2, $3) RETURNING *",
     [email, hashed, name || null]
   );
+
   return res.rows[0];
 };
 
