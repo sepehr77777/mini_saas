@@ -1,7 +1,5 @@
-"use client";
-
 import { useState } from "react";
-import { registerUser } from "@/lib/api";
+import { registerRequest } from "@/lib/auth.api"; // استفاده از تابع registerRequest
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
@@ -20,10 +18,10 @@ export default function RegisterPage() {
     setLoading(true);
 
     try {
-      await registerUser({ name, email, password });
+      await registerRequest({ name, email, password }); // استفاده از registerRequest
       router.push("/auth/login");
     } catch (err: any) {
-      setError(err.response?.data?.message || "Register failed");
+      setError(err.message || "Registration failed");
     } finally {
       setLoading(false);
     }
@@ -33,32 +31,12 @@ export default function RegisterPage() {
     <main className="flex min-h-screen items-center justify-center bg-zinc-950 text-zinc-100">
       <div className="w-full max-w-md rounded-2xl border border-zinc-800 bg-zinc-900 p-8 shadow-xl">
         <h1 className="mb-2 text-3xl font-bold">Create account</h1>
-        <p className="mb-6 text-sm text-zinc-400">
-          Start using your dashboard
-        </p>
+        <p className="mb-6 text-sm text-zinc-400">Start using your dashboard</p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          <Input
-            label="Name"
-            value={name}
-            onChange={setName}
-            placeholder="Sepehr Rahimi"
-          />
-
-          <Input
-            label="Email"
-            value={email}
-            onChange={setEmail}
-            placeholder="you@example.com"
-          />
-
-          <Input
-            label="Password"
-            type="password"
-            value={password}
-            onChange={setPassword}
-            placeholder="••••••••"
-          />
+          <Input label="Name" value={name} onChange={setName} placeholder="Sepehr Rahimi" />
+          <Input label="Email" value={email} onChange={setEmail} placeholder="you@example.com" />
+          <Input label="Password" type="password" value={password} onChange={setPassword} placeholder="••••••••" />
 
           {error && (
             <p className="rounded-lg bg-red-500/10 px-3 py-2 text-sm text-red-400">
@@ -77,10 +55,7 @@ export default function RegisterPage() {
 
         <p className="mt-6 text-center text-sm text-zinc-400">
           Already have an account?{" "}
-          <Link
-            href="/auth/login"
-            className="text-white hover:underline"
-          >
+          <Link href="/auth/login" className="text-white hover:underline">
             Login
           </Link>
         </p>
@@ -90,7 +65,6 @@ export default function RegisterPage() {
 }
 
 /* ---------------- Input Component ---------------- */
-
 function Input({
   label,
   value,
